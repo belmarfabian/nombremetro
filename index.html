@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NameFate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app">
+    <header>
+      <span class="logo">namefate</span>
+      <form id="form">
+        <input type="text" id="name" placeholder="Nombre" required autocomplete="off">
+        <input type="text" id="surname" placeholder="Apellido" required autocomplete="off">
+        <button type="submit">&rarr;</button>
+      </form>
+    </header>
+
+    <!-- LANDING (visible before analysis) -->
+    <section id="versus" class="versus">
+      <div class="vs-intro">
+        <h2>Tu nombre predice mas de lo que crees</h2>
+        <p>Ingresa tu nombre y apellido arriba. Analizamos 8 factores respaldados por investigacion academica y te entregamos un puntaje de 0 a 100 con el desglose de cada uno.</p>
+      </div>
+
+      <div class="vs-factors">
+        <div class="vs-f">
+          <span class="vs-f-title">Clasismo de apellido</span>
+          <span class="vs-f-desc">En Chile, el apellido predice ingresos hasta 50% superiores controlando por educacion. Apellidos vascos y europeos activan sesgos favorables en seleccion laboral.</span>
+          <span class="vs-f-src">Nunez & Gutierrez, 2004</span>
+        </div>
+        <div class="vs-f">
+          <span class="vs-f-title">Fonetica del nombre</span>
+          <span class="vs-f-desc">Sonidos duros (K, T, P) proyectan autoridad. Sonidos suaves (L, M, N) proyectan calidez. El balance entre ambos afecta como te perciben en entrevistas y negociaciones.</span>
+          <span class="vs-f-src">Sidhu & Pexman, 2018</span>
+        </div>
+        <div class="vs-f">
+          <span class="vs-f-title">Facilidad de pronunciacion</span>
+          <span class="vs-f-desc">Nombres faciles de pronunciar reciben evaluaciones hasta 20% mas favorables en contextos laborales. La fluidez cognitiva genera confianza inconsciente.</span>
+          <span class="vs-f-src">Laham, Koval & Alter, 2012</span>
+        </div>
+        <div class="vs-f">
+          <span class="vs-f-title">Sesgos de genero e iniciales</span>
+          <span class="vs-f-desc">Nombres de genero ambiguo reducen sesgos en seleccion ciega. Tus iniciales se correlacionan con rendimiento academico y autopercepcion.</span>
+          <span class="vs-f-src">Moss-Racusin et al., 2012 &middot; Nelson & Simmons, 2007</span>
+        </div>
+      </div>
+
+      <div class="vs-scale">
+        <span class="vs-scale-title">El puntaje (0–100) indica cuanta ventaja estadistica otorga tu nombre segun la investigacion:</span>
+        <div class="vs-scale-bar">
+          <div class="vs-scale-seg seg-low">0–40<br>Desfavorable</div>
+          <div class="vs-scale-seg seg-mid">41–64<br>Neutro</div>
+          <div class="vs-scale-seg seg-ok">65–79<br>Favorable</div>
+          <div class="vs-scale-seg seg-high">80–100<br>Muy favorable</div>
+        </div>
+      </div>
+
+      <div class="vs-card" id="vs-card">
+        <div class="vs-side">
+          <span class="vs-name" id="vs-a-name"></span>
+          <span class="vs-score" id="vs-a-score"></span>
+        </div>
+        <span class="vs-divider">vs</span>
+        <div class="vs-side">
+          <span class="vs-name" id="vs-b-name"></span>
+          <span class="vs-score" id="vs-b-score"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS (hidden until analysis) -->
+    <main id="results" class="hidden">
+      <div class="score-row">
+        <span class="score-name" id="r-name"></span>
+        <span class="score-num" id="r-score">0</span>
+        <span class="score-max">/ 100</span>
+        <span class="score-tag" id="r-tag"></span>
+      </div>
+      <div id="factors"></div>
+      <footer>
+        <span class="refs-btn" id="refs-btn">referencias</span>
+        <span class="sep">&middot;</span>
+        <span class="disc">herramienta ludica &mdash; los nombres influyen en percepciones, no determinan destinos</span>
+        <div id="refs" class="refs hidden"></div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
