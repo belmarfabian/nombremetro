@@ -70,6 +70,12 @@ class NamePredictor {
     document.getElementById('refs-btn').addEventListener('click', () => {
       document.getElementById('refs').classList.toggle('hidden');
     });
+    document.getElementById('back-btn').addEventListener('click', () => {
+      this.results.classList.add('hidden');
+      this.versus.classList.remove('hidden');
+      document.getElementById('name').value = '';
+      document.getElementById('surname').value = '';
+    });
   }
 
   calcScore(first, last) {

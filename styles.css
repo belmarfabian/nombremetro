@@ -374,6 +374,14 @@ footer {
   line-height: 1.6;
 }
 
+.back-btn {
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.back-btn:hover { color: #888; }
+
 .refs-btn {
   cursor: pointer;
   transition: color 0.15s;
