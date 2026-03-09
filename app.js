@@ -61,6 +61,9 @@ class NamePredictor {
     this.form = document.getElementById('form');
     this.results = document.getElementById('results');
     this.versus = document.getElementById('versus');
+    this.lastName = '';
+    this.lastFirst = '';
+    this.lastTotal = 0;
     this.form.addEventListener('submit', e => {
       e.preventDefault();
       const n = document.getElementById('name').value.trim();
@@ -75,11 +78,36 @@ class NamePredictor {
       this.versus.classList.remove('hidden');
       document.getElementById('name').value = '';
       document.getElementById('surname').value = '';
+      document.getElementById('name').focus();
+      history.pushState(null, '', location.pathname);
     });
+    document.getElementById('share-btn').addEventListener('click', () => {
+      const btn = document.getElementById('share-btn');
+      const tag = this.lastTotal >= 80 ? 'Excepcional' : this.lastTotal >= 65 ? 'Alto' : this.lastTotal >= 50 ? 'Moderado' : 'Bajo';
+      const url = `${location.origin}${location.pathname}?n=${encodeURIComponent(this.lastFirst)}&s=${encodeURIComponent(this.lastName)}`;
+      const text = `nombremetro: ${this.lastFirst} ${this.lastName} → ${this.lastTotal}/100 (${tag})\n${url}`;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'compartir'; btn.classList.remove('copied'); }, 2000);
+      });
+    });
+    // Check URL params for direct links
+    const params = new URLSearchParams(location.search);
+    const pn = params.get('n'), ps = params.get('s');
+    if (pn && ps) {
+      document.getElementById('name').value = pn;
+      document.getElementById('surname').value = ps;
+      this.predict(pn, ps);
+    }
+  }
+
+  normalize(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   }
 
   calcScore(first, last) {
-    const n = first.toLowerCase(), s = last.toLowerCase();
+    const n = this.normalize(first), s = this.normalize(last);
     const factors = [
       this.chileClass(s), this.phonetics(n, s), this.fluency(n, s),
       this.socioeconomic(n), this.initials(n, s), this.length(n, s),
@@ -107,7 +135,9 @@ class NamePredictor {
   }
 
   predict(first, last) {
-    const n = first.toLowerCase(), s = last.toLowerCase();
+    this.lastFirst = first;
+    this.lastName = last;
+    const n = this.normalize(first), s = this.normalize(last);
     const factors = [
       this.chileClass(s),
       this.phonetics(n, s),
@@ -119,8 +149,10 @@ class NamePredictor {
       this.gender(n),
     ];
     const total = this.weightedAvg(factors);
+    this.lastTotal = total;
     this.versus.classList.add('hidden');
     this.render(first, last, total, factors);
+    history.replaceState(null, '', `?n=${encodeURIComponent(first)}&s=${encodeURIComponent(last)}`);
   }
 
   chileClass(s) {

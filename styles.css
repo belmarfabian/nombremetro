@@ -374,13 +374,15 @@ footer {
   line-height: 1.6;
 }
 
-.back-btn {
+.share-btn, .back-btn {
   cursor: pointer;
   font-weight: 600;
   transition: color 0.15s;
 }
 
-.back-btn:hover { color: #888; }
+.share-btn:hover, .back-btn:hover { color: #888; }
+
+.share-btn.copied { color: #16a34a; }
 
 .refs-btn {
   cursor: pointer;
